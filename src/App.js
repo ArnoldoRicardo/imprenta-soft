@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+/** @format */
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import React, { Component } from 'react';
+
+import Navbar from './components/Navbar';
+import Content from './components/Content';
+
+class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { date: new Date() };
+    }
+
+    render() {
+        return (
+            <>
+                <Navbar />
+                <Content />
+            </>
+        );
+    }
 }
 
 export default App;
