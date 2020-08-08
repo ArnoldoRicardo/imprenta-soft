@@ -2,7 +2,9 @@
 
 import React from 'react';
 
-import './content.css';
+import SearchCliente from './SearchCliente';
+
+import './Content.css';
 
 const Content = (props) => {
     return (
@@ -10,27 +12,7 @@ const Content = (props) => {
             <div className='container'>
                 <div className='row my-3'>
                     <div className='col-10'>
-                        <div className='form-group row'>
-                            <label htmlFor='Cliente' className='col-1'>
-                                Cliente:
-                            </label>
-                            <div className='col-9'>
-                                <input
-                                    type='text'
-                                    className='form-control'
-                                    id='Cliente'
-                                    placeholder='arnoldo Ricardo | 963 127 05 17'
-                                />
-                                <small className='form-text text-muted'>
-                                    We'll never share your email with anyone else.
-                                </small>
-                            </div>
-                            <div className='col-2'>
-                                <button type='button' className='btn btn-primary'>
-                                    Agregar
-                                </button>
-                            </div>
-                        </div>
+                        <SearchCliente />
                     </div>
                     <div className='col-2 border'>nota #1</div>
                 </div>

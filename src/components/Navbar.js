@@ -5,7 +5,7 @@ import React from 'react';
 const Navbar = () => {
     return (
         <nav className='navbar navbar-expand-md navbar-dark bg-dark'>
-            <a className='navbar-brand' href='#'>
+            <a className='navbar-brand' href='#d'>
                 Talleres Graficos
             </a>
             <button
@@ -22,17 +22,17 @@ const Navbar = () => {
             <div className='collapse navbar-collapse' id='navbarNavDropdown'>
                 <ul className='navbar-nav'>
                     <li className='nav-item active'>
-                        <a className='nav-link' href='#'>
+                        <a className='nav-link' href='#d'>
                             Home <span className='sr-only'>(current)</span>
                         </a>
                     </li>
                     <li className='nav-item'>
-                        <a className='nav-link' href='#'>
+                        <a className='nav-link' href='#d'>
                             Features
                         </a>
                     </li>
                     <li className='nav-item'>
-                        <a className='nav-link' href='#'>
+                        <a className='nav-link' href='#d'>
                             Pricing
                         </a>
                     </li>
