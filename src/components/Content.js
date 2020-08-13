@@ -14,7 +14,11 @@ const Content = (props) => {
                     <div className='col-10'>
                         <SearchCliente />
                     </div>
-                    <div className='col-2 border'>nota #1</div>
+                    <div className='col-2'>
+                        <button type='button' className='btn btn-secondary'>
+                            Nota <span className='badge badge-light'>1</span>
+                        </button>
+                    </div>
                 </div>
                 <div className='row'>
                     <div className='col-12'>
