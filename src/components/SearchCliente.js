@@ -11,6 +11,7 @@ class SearchCliente extends Component {
             loading: false,
             search: null,
             selected: null,
+            notExists: null,
         };
     }
 
@@ -23,7 +24,11 @@ class SearchCliente extends Component {
     handleClick = (id, index) => {
         console.log(id, index);
 
-        this.setState({ value: this.state.search[index].nombre, selected: id });
+        this.setState({
+            value: this.state.search[index].nombre,
+            selected: id,
+            search: null,
+        });
     };
 
     handleChange = async (event) => {
@@ -46,6 +51,7 @@ class SearchCliente extends Component {
                         onChange={this.handleChange}
                         value={this.state.value}
                     />
+
                     {this.state.search && (
                         <small className='form-text text-muted'>
                             {this.state.search.slice(0, 2).map((cliente, index) => (
@@ -61,11 +67,13 @@ class SearchCliente extends Component {
                         </small>
                     )}
                 </div>
-                <div className='col-2'>
-                    <button type='button' className='btn btn-primary'>
-                        Agregar
-                    </button>
-                </div>
+                {this.state.notExists && (
+                    <div className='col-2'>
+                        <button type='button' className='btn btn-primary'>
+                            Agregar
+                        </button>
+                    </div>
+                )}
             </div>
         );
     }
