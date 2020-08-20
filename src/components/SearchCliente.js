@@ -2,32 +2,35 @@
 
 import React, { Component } from 'react';
 
+import ClienteService from '../services/ClienteService';
+
+const clienteService = new ClienteService();
+
 class SearchCliente extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             value: '',
-            loading: false,
-            search: null,
+            search: [],
             selected: null,
-            notExists: null,
         };
     }
 
     search = async (val) => {
-        let response = await fetch('http://127.0.0.1:8000/api/cliente');
-        let search = await response.json();
-        this.setState({ search: search });
+        let search = await clienteService.search(val);
+        if (search.length > 0) {
+            this.setState({ search: search });
+        } else {
+            this.setState({ search: search, selected: null });
+        }
     };
 
     handleClick = (id, index) => {
-        console.log(id, index);
-
         this.setState({
             value: this.state.search[index].nombre,
             selected: id,
-            search: null,
+            search: [],
         });
     };
 
@@ -36,7 +39,25 @@ class SearchCliente extends Component {
         this.setState({ value: event.target.value });
     };
 
+    create = async () => {
+        const cliente = {
+            nombre: this.state.value,
+            telefono: '963 127 05 17',
+        };
+
+        const user = await clienteService.create(cliente);
+
+        this.setState({ selected: user.id });
+    };
+
     render() {
+        const { value, search, selected } = this.state;
+        let notExists = false;
+
+        if (search.length <= 0 && !selected && value) {
+            notExists = true;
+        }
+
         return (
             <div className='form-group row'>
                 <label htmlFor='Cliente' className='col-1'>
@@ -49,12 +70,13 @@ class SearchCliente extends Component {
                         id='Cliente'
                         placeholder='arnoldo Ricardo | 963 127 05 17'
                         onChange={this.handleChange}
-                        value={this.state.value}
+                        value={value}
                     />
 
-                    {this.state.search && (
+                    {search && (
                         <small className='form-text text-muted'>
-                            {this.state.search.slice(0, 2).map((cliente, index) => (
+                            {/* {search.slice(0, 2).map((cliente, index) => ( */}
+                            {search.map((cliente, index) => (
                                 <button
                                     className='btn btn-secondary mr-1'
                                     key={cliente.id}
@@ -67,9 +89,13 @@ class SearchCliente extends Component {
                         </small>
                     )}
                 </div>
-                {this.state.notExists && (
+                {notExists && (
                     <div className='col-2'>
-                        <button type='button' className='btn btn-primary'>
+                        <button
+                            type='button'
+                            className='btn btn-primary'
+                            onClick={this.create}
+                        >
                             Agregar
                         </button>
                     </div>
