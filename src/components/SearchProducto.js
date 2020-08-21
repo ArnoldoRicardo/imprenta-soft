@@ -2,9 +2,9 @@
 
 import React, { Component } from 'react';
 
-import ClienteService from '../services/ClienteService';
+import ProductoService from '../services/ProductoService';
 
-const clienteService = new ClienteService();
+const productoService = new ProductoService();
 
 class SearchProducto extends Component {
     constructor(props) {
@@ -18,7 +18,7 @@ class SearchProducto extends Component {
     }
 
     search = async (val) => {
-        let search = await clienteService.search(val);
+        let search = await productoService.search(val);
         if (search.length > 0) {
             this.setState({ search: search });
         } else {
@@ -26,7 +26,7 @@ class SearchProducto extends Component {
         }
     };
 
-    handleClick = (id, index) => {
+    seleccionar = (id, index) => {
         this.setState({
             value: this.state.search[index].nombre,
             selected: id,
@@ -39,15 +39,8 @@ class SearchProducto extends Component {
         this.setState({ value: event.target.value });
     };
 
-    create = async () => {
-        const cliente = {
-            nombre: this.state.value,
-            telefono: '963 127 05 17',
-        };
-
-        const user = await clienteService.create(cliente);
-
-        this.setState({ selected: user.id });
+    agregar = async () => {
+        console.log('producto agregado', this.state.selected);
     };
 
     render() {
@@ -70,12 +63,12 @@ class SearchProducto extends Component {
 
                     {search && (
                         <small className='form-text text-muted'>
-                            {/* {search.slice(0, 2).map((cliente, index) => ( */}
+                            {/* {search.slice(0, 2).map((cliente, index) => ( //mostrar los 2 primeros */}
                             {search.map((cliente, index) => (
                                 <button
                                     className='btn btn-secondary mr-1'
                                     key={cliente.id}
-                                    onClick={(e) => this.handleClick(cliente.id, index)}
+                                    onClick={(e) => this.seleccionar(cliente.id, index)}
                                     href='#'
                                 >
                                     {cliente.nombre}
@@ -88,7 +81,7 @@ class SearchProducto extends Component {
                     <button
                         type='button'
                         className='btn btn-primary'
-                        onClick={this.create}
+                        onClick={this.agregar}
                     >
                         Agregar
                     </button>
