@@ -96,7 +96,7 @@ class SearchCliente extends Component {
                             className='btn btn-primary'
                             onClick={this.create}
                         >
-                            Agregar
+                            Crear Nuevo
                         </button>
                     </div>
                 )}
