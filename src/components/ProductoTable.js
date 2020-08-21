@@ -19,7 +19,7 @@ const ProductoTable = (props) => {
             <tbody>
                 {productos.map((producto) => (
                     <tr key={producto.id}>
-                        <th scope='row'>{producto.name}</th>
+                        <th scope='row'>{producto.nombre}</th>
                         <td>${producto.precio}</td>
                         <td>
                             <input
