@@ -53,15 +53,22 @@ class CreateNota extends Component {
         };
     }
 
+    handleClienteChange = (id) => {
+        this.setState({ cliente: id });
+    };
+
     render() {
-        const { productos } = this.state;
+        const { cliente, productos } = this.state;
 
         return (
             <>
                 <div className='container'>
                     <div className='row my-3'>
                         <div className='col-10'>
-                            <SearchCliente />
+                            <SearchCliente
+                                onClienteChange={this.handleClienteChange}
+                                selected={cliente}
+                            />
                         </div>
                         <div className='col-2'>
                             <button type='button' className='btn btn-secondary'>

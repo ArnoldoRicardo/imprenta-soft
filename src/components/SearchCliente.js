@@ -13,25 +13,20 @@ class SearchCliente extends Component {
         this.state = {
             value: '',
             search: [],
-            selected: null,
         };
     }
 
     search = async (val) => {
         let search = await clienteService.search(val);
-        if (search.length > 0) {
-            this.setState({ search: search });
-        } else {
-            this.setState({ search: search, selected: null });
-        }
+        this.setState({ search: search });
     };
 
     handleClick = (id, index) => {
         this.setState({
             value: this.state.search[index].nombre,
-            selected: id,
             search: [],
         });
+        this.props.onClienteChange(id);
     };
 
     handleChange = async (event) => {
@@ -47,11 +42,12 @@ class SearchCliente extends Component {
 
         const user = await clienteService.create(cliente);
 
-        this.setState({ selected: user.id });
+        this.props.onClienteChange(user.id);
     };
 
     render() {
-        const { value, search, selected } = this.state;
+        const { value, search } = this.state;
+        const { selected } = this.props;
         let notExists = false;
 
         if (search.length <= 0 && !selected && value) {
