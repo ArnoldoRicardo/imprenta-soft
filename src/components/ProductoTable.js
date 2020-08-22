@@ -17,7 +17,7 @@ const ProductoTable = (props) => {
                 </tr>
             </thead>
             <tbody>
-                {productos.map((producto) => (
+                {productos.reverse().map((producto) => (
                     <tr key={producto.id}>
                         <th scope='row'>{producto.nombre}</th>
                         <td>${producto.precio}</td>
