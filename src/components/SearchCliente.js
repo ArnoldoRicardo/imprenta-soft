@@ -59,12 +59,12 @@ class SearchCliente extends Component {
                 <label htmlFor='Cliente' className='col-1'>
                     Cliente:
                 </label>
-                <div className='col-9'>
+                <div className='col'>
                     <input
                         type='text'
                         className='form-control'
                         id='Cliente'
-                        placeholder='arnoldo Ricardo | 963 127 05 17'
+                        placeholder='arnoldo Ricardo'
                         onChange={this.handleChange}
                         value={value}
                     />
