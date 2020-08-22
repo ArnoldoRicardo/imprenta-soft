@@ -63,17 +63,24 @@ class CreateNota extends Component {
                         </div>
                     </div>
                     <div className='row justify-content-end'>
-                        <div className='col-2'>total: $150</div>
-                        <div className='col-2'>
-                            <label htmlFor='Anticipo'>Anticipo:</label>
-                            <input
-                                type='text'
-                                className='form-control'
-                                id='Anticipo'
-                                placeholder='0'
-                            />
+                        <div className='col-3'>total: $150</div>
+                        <div className='col-3'>
+                            <div className='row'>
+                                <label
+                                    htmlFor='Anticipo'
+                                    className='col-6 col-form-label'
+                                >
+                                    Anticipo:
+                                </label>
+                                <input
+                                    type='text'
+                                    className='col-6 form-control'
+                                    id='Anticipo'
+                                    placeholder='0'
+                                />
+                            </div>
                         </div>
-                        <div className='col-2'>
+                        <div className='col-3'>
                             <button type='button' className='btn btn-primary'>
                                 Imprimir
                             </button>
