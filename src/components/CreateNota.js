@@ -12,49 +12,25 @@ class CreateNota extends Component {
 
         this.state = {
             cliente: null,
-            productos: [
-                {
-                    id: 1,
-                    nombre: 'Lona',
-                    costo: '20.00',
-                    departamento: 'gran formato',
-                    precio: 100,
-                    cantidad: 1,
-                    descripcion: 'lona de se vende',
-                },
-                {
-                    id: 2,
-                    nombre: 'Lona',
-                    costo: '20.00',
-                    departamento: 'gran formato',
-                    precio: 100,
-                    cantidad: 1,
-                    descripcion: 'lona de se vende',
-                },
-                {
-                    id: 3,
-                    nombre: 'Lona',
-                    costo: '20.00',
-                    departamento: 'gran formato',
-                    precio: 100,
-                    cantidad: 1,
-                    descripcion: 'lona de se vende',
-                },
-                {
-                    id: 4,
-                    nombre: 'Lona',
-                    costo: '20.00',
-                    departamento: 'gran formato',
-                    precio: 100,
-                    cantidad: 1,
-                    descripcion: 'lona de se vende',
-                },
-            ],
+            productos: [],
         };
     }
 
     handleClienteChange = (id) => {
         this.setState({ cliente: id });
+    };
+
+    handleAddProducto = (producto) => {
+        producto.cantidad = 1;
+        producto.descripcion = '';
+
+        this.setState((state) => {
+            const productos = state.productos.concat(producto);
+
+            return {
+                productos,
+            };
+        });
     };
 
     render() {
@@ -78,7 +54,7 @@ class CreateNota extends Component {
                     </div>
                     <div className='row'>
                         <div className='col-12'>
-                            <SearchProducto />
+                            <SearchProducto onAddProducto={this.handleAddProducto} />
                         </div>
                     </div>
                     <div className='row'>
