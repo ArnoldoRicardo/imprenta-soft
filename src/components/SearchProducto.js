@@ -57,7 +57,7 @@ class SearchProducto extends Component {
                         <small className='form-text text-muted'>
                             {search.map((producto) => (
                                 <button
-                                    className='btn btn-secondary mr-1'
+                                    className='btn btn-primary mr-1'
                                     key={producto.id}
                                     onClick={(e) => this.addProducto(producto)}
                                     href='#'

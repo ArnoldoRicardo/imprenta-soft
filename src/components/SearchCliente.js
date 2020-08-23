@@ -74,7 +74,7 @@ class SearchCliente extends Component {
                             {/* {search.slice(0, 2).map((cliente, index) => ( */}
                             {search.map((cliente, index) => (
                                 <button
-                                    className='btn btn-secondary mr-1'
+                                    className='btn btn-primary mr-1'
                                     key={cliente.id}
                                     onClick={(e) => this.handleClick(cliente.id, index)}
                                     href='#'
