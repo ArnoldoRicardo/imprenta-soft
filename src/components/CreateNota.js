@@ -83,6 +83,7 @@ class CreateNota extends Component {
     };
 
     handledSave = () => {
+        //validaciones
         const existenProductos = this.state.productos.length > 0;
         const descripcionesVacias = this.state.productos
             .map((producto) => producto.descripcion)
@@ -90,11 +91,23 @@ class CreateNota extends Component {
         const anticipo = parseInt(this.state.anticipo) > 0;
 
         if (existenProductos) {
-            console.log('productos agregados');
             if (!descripcionesVacias) {
-                console.log('descripciones agregadas');
                 if (anticipo) {
-                    console.log('anticipo cobrado');
+                    //datos para crear la nota
+
+                    const total = this.state.productos
+                        .map((producto) => producto.total)
+                        .reduce((a, b) => a + b);
+                    const resta = total - anticipo;
+
+                    const datos = {
+                        cliente: this.state.cliente,
+                        productos: this.state.productos,
+                        anticipo: this.state.anticipo,
+                        total: total,
+                    };
+
+                    console.log(datos);
                 } else {
                     window.alert('necesitas cobrar anticipo');
                 }
