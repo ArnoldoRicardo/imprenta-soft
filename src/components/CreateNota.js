@@ -6,6 +6,8 @@ import SearchCliente from './SearchCliente';
 import SearchProducto from './SearchProducto';
 import ProductoTable from './ProductoTable';
 
+const shortid = require('shortid');
+
 class CreateNota extends Component {
     constructor(props) {
         super(props);
@@ -13,8 +15,13 @@ class CreateNota extends Component {
         this.state = {
             cliente: null,
             productos: [],
+            anticipo: 0,
         };
     }
+
+    handleChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
+    };
 
     handleClienteChange = (id) => {
         this.setState({ cliente: id });
@@ -23,6 +30,8 @@ class CreateNota extends Component {
     handleAddProducto = (producto) => {
         producto.cantidad = 1;
         producto.descripcion = '';
+        producto.pk = shortid.generate();
+        producto.total = 1 * producto.precio;
 
         this.setState((state) => {
             const productos = state.productos.concat(producto);
@@ -33,8 +42,57 @@ class CreateNota extends Component {
         });
     };
 
+    handleProductoChange = (producto, target) => {
+        const pos = this.state.productos
+            .map((producto) => {
+                return producto.pk;
+            })
+            .indexOf(producto.pk);
+
+        this.setState((state) => {
+            const productos = state.productos.map((producto, j) => {
+                if (j === pos) {
+                    producto[target.name] = target.value;
+                    producto.total = producto.cantidad * producto.precio;
+                    return producto;
+                } else {
+                    return producto;
+                }
+            });
+
+            return {
+                productos,
+            };
+        });
+    };
+
+    handledClick = () => {
+        const existenProductos = this.state.productos.length > 0;
+        const descripcionesVacias = this.state.productos
+            .map((producto) => producto.descripcion)
+            .some((descripcion) => descripcion.length < 1);
+
+        if (existenProductos) {
+            console.log('productos agregados');
+            if (!descripcionesVacias) {
+                console.log('descripciones agregadas');
+            } else {
+                window.alert('necestitas escribir la descripcion');
+            }
+        } else {
+            window.alert('necestitas agragar productos a la nota');
+        }
+    };
+
     render() {
-        const { cliente, productos } = this.state;
+        const { cliente, productos, anticipo } = this.state;
+
+        let total = 0;
+
+        if (productos.length > 0) {
+            total = productos.map((producto) => producto.total).reduce((a, b) => a + b);
+        }
+        const resta = total - anticipo;
 
         return (
             <>
@@ -59,15 +117,22 @@ class CreateNota extends Component {
                     </div>
                     <div className='row'>
                         <div className='col-12'>
-                            <ProductoTable productos={productos} />
+                            <ProductoTable
+                                productos={productos}
+                                handleChange={this.handleProductoChange}
+                            />
                         </div>
                     </div>
                     <div className='row justify-content-end'>
-                        <div className='col-3'>total: $150</div>
+                        <div className='col-3 text-right'>
+                            <button type='button' className='btn btn-danger'>
+                                total <span className='badge badge-light'>{total}</span>
+                            </button>
+                        </div>
                         <div className='col-3'>
                             <div className='row'>
                                 <label
-                                    htmlFor='Anticipo'
+                                    htmlFor='anticipo'
                                     className='col-6 col-form-label'
                                 >
                                     Anticipo:
@@ -75,14 +140,23 @@ class CreateNota extends Component {
                                 <input
                                     type='text'
                                     className='col-6 form-control'
-                                    id='Anticipo'
+                                    name='anticipo'
                                     placeholder='0'
+                                    value={anticipo}
+                                    onChange={this.handleChange}
                                 />
                             </div>
                         </div>
                         <div className='col-3'>
-                            <button type='button' className='btn btn-primary'>
-                                Imprimir
+                            <button type='button' className='btn btn-danger'>
+                                resta <span className='badge badge-light'>{resta}</span>
+                            </button>
+                            <button
+                                type='button'
+                                className='btn btn-success ml-1'
+                                onClick={this.handledClick}
+                            >
+                                Cobrar
                             </button>
                         </div>
                     </div>

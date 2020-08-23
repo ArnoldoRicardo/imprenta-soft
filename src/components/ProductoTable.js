@@ -17,16 +17,26 @@ const ProductoTable = (props) => {
                 </tr>
             </thead>
             <tbody>
-                {productos.reverse().map((producto) => (
-                    <tr key={producto.id}>
-                        <th scope='row'>{producto.nombre}</th>
+                {productos.map((producto) => (
+                    <tr key={producto.pk}>
+                        <th scope='row'>
+                            {producto.nombre}
+                            <br />
+                            <button type='button' className='btn btn-danger'>
+                                Borrar
+                            </button>
+                        </th>
+
                         <td>${producto.precio}</td>
                         <td>
                             <input
-                                type='text'
+                                type='number'
+                                step='any'
                                 className='form-control'
                                 name='cantidad'
                                 placeholder={producto.cantidad}
+                                onChange={(e) => props.handleChange(producto, e.target)}
+                                // value={producto.cantidad}
                             />
                         </td>
                         <td>$100</td>
@@ -34,8 +44,11 @@ const ProductoTable = (props) => {
                             <textarea
                                 className='form-control'
                                 id='exampleFormControlTextarea1'
+                                name='descripcion'
                                 rows='3'
-                            ></textarea>
+                                onChange={(e) => props.handleChange(producto, e.target)}
+                                // value={producto.descripcion}
+                            />
                         </td>
                     </tr>
                 ))}
