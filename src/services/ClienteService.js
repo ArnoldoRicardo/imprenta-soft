@@ -1,16 +1,16 @@
 /** @format */
 
-const API_URL = 'http://localhost:8000/api';
+const API_URL = 'http://localhost:8000/api/cliente';
 
 export default class ClienteService {
     async search(query) {
-        let response = await fetch(`${API_URL}/cliente/search/${query}`);
+        let response = await fetch(`${API_URL}/search/${query}`);
         let search = await response.json();
         return search;
     }
 
     async create(data) {
-        let response = await fetch(`${API_URL}/cliente`, {
+        let response = await fetch(`${API_URL}`, {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(data),
             headers: {
