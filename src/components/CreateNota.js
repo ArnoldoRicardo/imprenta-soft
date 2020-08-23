@@ -15,7 +15,7 @@ class CreateNota extends Component {
         this.state = {
             cliente: null,
             productos: [],
-            anticipo: 0,
+            anticipo: '0',
         };
     }
 
@@ -42,10 +42,26 @@ class CreateNota extends Component {
         });
     };
 
+    handleRemoveProducto = (producto) => {
+        const pos = this.state.productos
+            .map((p) => {
+                return p.pk;
+            })
+            .indexOf(producto.pk);
+
+        this.setState((state) => {
+            const productos = state.productos.filter((producto, j) => pos !== j);
+
+            return {
+                productos,
+            };
+        });
+    };
+
     handleProductoChange = (producto, target) => {
         const pos = this.state.productos
-            .map((producto) => {
-                return producto.pk;
+            .map((p) => {
+                return p.pk;
             })
             .indexOf(producto.pk);
 
@@ -66,16 +82,22 @@ class CreateNota extends Component {
         });
     };
 
-    handledClick = () => {
+    handledSave = () => {
         const existenProductos = this.state.productos.length > 0;
         const descripcionesVacias = this.state.productos
             .map((producto) => producto.descripcion)
             .some((descripcion) => descripcion.length < 1);
+        const anticipo = parseInt(this.state.anticipo) > 0;
 
         if (existenProductos) {
             console.log('productos agregados');
             if (!descripcionesVacias) {
                 console.log('descripciones agregadas');
+                if (anticipo) {
+                    console.log('anticipo cobrado');
+                } else {
+                    window.alert('necesitas cobrar anticipo');
+                }
             } else {
                 window.alert('necestitas escribir la descripcion');
             }
@@ -120,6 +142,7 @@ class CreateNota extends Component {
                             <ProductoTable
                                 productos={productos}
                                 handleChange={this.handleProductoChange}
+                                handleRemoveProducto={this.handleRemoveProducto}
                             />
                         </div>
                     </div>
@@ -138,7 +161,7 @@ class CreateNota extends Component {
                                     Anticipo:
                                 </label>
                                 <input
-                                    type='text'
+                                    type='number'
                                     className='col-6 form-control'
                                     name='anticipo'
                                     placeholder='0'
@@ -154,7 +177,7 @@ class CreateNota extends Component {
                             <button
                                 type='button'
                                 className='btn btn-success ml-1'
-                                onClick={this.handledClick}
+                                onClick={this.handledSave}
                             >
                                 Cobrar
                             </button>

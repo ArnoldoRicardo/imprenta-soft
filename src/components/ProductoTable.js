@@ -22,7 +22,13 @@ const ProductoTable = (props) => {
                         <th scope='row'>
                             {producto.nombre}
                             <br />
-                            <button type='button' className='btn btn-danger'>
+                            <button
+                                type='button'
+                                className='btn btn-danger'
+                                onClick={(e) =>
+                                    props.handleRemoveProducto(producto, e.target)
+                                }
+                            >
                                 Borrar
                             </button>
                         </th>
