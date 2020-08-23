@@ -6,7 +6,10 @@ import SearchCliente from './SearchCliente';
 import SearchProducto from './SearchProducto';
 import ProductoTable from './ProductoTable';
 
+import PedidoService from '../services/PedidoService';
+
 const shortid = require('shortid');
+const pedidoService = new PedidoService();
 
 class CreateNota extends Component {
     constructor(props) {
@@ -82,7 +85,7 @@ class CreateNota extends Component {
         });
     };
 
-    handledSave = () => {
+    handledSave = async () => {
         //validaciones
         const existenProductos = this.state.productos.length > 0;
         const descripcionesVacias = this.state.productos
@@ -98,16 +101,17 @@ class CreateNota extends Component {
                     const total = this.state.productos
                         .map((producto) => producto.total)
                         .reduce((a, b) => a + b);
-                    const resta = total - anticipo;
 
                     const datos = {
-                        cliente: this.state.cliente,
+                        folio: this.state.cliente,
                         productos: this.state.productos,
                         anticipo: this.state.anticipo,
                         total: total,
                     };
 
-                    console.log(datos);
+                    const pedido = await pedidoService.create(datos);
+
+                    console.log('datos guardados', pedido);
                 } else {
                     window.alert('necesitas cobrar anticipo');
                 }
